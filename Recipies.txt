@@ -4,4 +4,7 @@ pasta
 kheer
 pizza pasta
 
+chicken
+chicken fry
+
 Thank you
