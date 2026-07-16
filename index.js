@@ -1,13 +1,18 @@
 // Write your code below:
-const basketHeading = document.querySelector('#basket-heading');
-basketHeading.style.color = 'brown';
+const firstdiv = document.querySelector('div');
 
-const fruits = document.querySelectorAll('.fruit');
+const subHeading = document.createElement('h3');
+subHeading.textContent = 'Buy high quality organic fruits online';
+subHeading.style.fontStyle = 'italic';
 
-for (let i = 1; i < fruits.length; i += 2){
-    fruits[i].style.backgroundColor = 'brown';
-    fruits[i].style.color = 'white';
-}
+const mainHeading = document.querySelector('#main-heading');
+firstdiv.insertBefore(subHeading, mainHeading.nextSibling);
+
+const secondDiv = document.querySelectorAll('div')[1];
+
+const totalFruits = document.createElement('p');
+totalFruits.textContent = 'Total fruits: 4';
+totalFruits.id = 'fruits-total';
 
 const fruitList = document.querySelector('.fruits');
-fruitList.style.listStyleType = 'none';
+secondDiv.insertBefore(totalFruits, fruitList);
