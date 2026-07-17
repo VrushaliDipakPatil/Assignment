@@ -1,18 +1,50 @@
-// Write your code below:
-const firstdiv = document.querySelector('div');
+const form = document.querySelector("form");
+const fruitList = document.querySelector(".fruits");
 
-const subHeading = document.createElement('h3');
-subHeading.textContent = 'Buy high quality organic fruits online';
-subHeading.style.fontStyle = 'italic';
+const fruits = document.querySelectorAll(".fruit");
 
-const mainHeading = document.querySelector('#main-heading');
-firstdiv.insertBefore(subHeading, mainHeading.nextSibling);
+fruits.forEach((fruit) => {
+    const editBtn =
+        document.createElement("button");
+    editBtn.className = "edit-btn";
+    editBtn.textContent = "Edit";
+    fruit.appendChild(editBtn);
+});
 
-const secondDiv = document.querySelectorAll('div')[1];
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-const totalFruits = document.createElement('p');
-totalFruits.textContent = 'Total fruits: 4';
-totalFruits.id = 'fruits-total';
+    const fruitInput = document.getElementById("fruit-to-add");
+    const fruitName = fruitInput.value.trim();
 
-const fruitList = document.querySelector('.fruits');
-secondDiv.insertBefore(totalFruits, fruitList);
+    if (fruitName === "") {
+        return;
+    }
+
+    const li = document.createElement("li");
+    li.className = "fruit";
+    li.appendChild(document.createTextNode(fruitName));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "X";
+
+    const editBtn = document.createElement("button");
+    editBtn.className = "edit-btn";
+    editBtn.textContent = "Edit";
+
+    li.appendChild(deleteBtn);
+    li.appendChild(editBtn);
+
+    fruitList.appendChild(li);
+
+    fruitInput.value = "";
+})
+
+fruitList.addEventListener("click", function (e) {
+    if (e.target.classList.contains("delete-btn")) {
+        const li = e.target.parentElement;
+        fruitList.removeChild(li);
+    }
+});
+
