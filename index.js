@@ -1,50 +1,78 @@
-const form = document.querySelector("form");
-const fruitList = document.querySelector(".fruits");
+let form = document.getElementsByTagName('form')[0];
 
-const fruits = document.querySelectorAll(".fruit");
+const descriptionInput = document.createElement('input');
+descriptionInput.type = 'text';
+descriptionInput.id = 'description';
+descriptionInput.placeholder = 'Enter fruit description';
 
-fruits.forEach((fruit) => {
-    const editBtn =
-        document.createElement("button");
-    editBtn.className = "edit-btn";
-    editBtn.textContent = "Edit";
-    fruit.appendChild(editBtn);
-});
+const addButton = form.querySelector('button');
+form.insertBefore(descriptionInput, addButton);
 
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
 
-    const fruitInput = document.getElementById("fruit-to-add");
-    const fruitName = fruitInput.value.trim();
+// add fruit to the cart
+let fruititems = document.querySelector('.fruits');
+let descriptionitems = document.querySelector('#description');
 
-    if (fruitName === "") {
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let fruitName = document.getElementById('fruit-to-add').value;
+    let fruitDescription = document.getElementById('description').value;
+    if (fruitDescription === '') {
+        alert('Please enter a description.');
         return;
     }
 
-    const li = document.createElement("li");
-    li.className = "fruit";
+    let li = document.createElement('li');
+    li.className = 'fruit';
+
     li.appendChild(document.createTextNode(fruitName));
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.className = "delete-btn";
+    let p = document.createElement('p');
+    p.textContent = fruitDescription;
+    p.style.fontStyle = 'italic';
+    li.appendChild(p);
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
     deleteBtn.textContent = "X";
 
-    const editBtn = document.createElement("button");
-    editBtn.className = "edit-btn";
-    editBtn.textContent = "Edit";
-
     li.appendChild(deleteBtn);
-    li.appendChild(editBtn);
 
-    fruitList.appendChild(li);
+    fruititems.appendChild(li);
 
-    fruitInput.value = "";
-})
+    document.getElementById('fruit-to-add').value = '';
+    document.getElementById('description').value = '';
+});
 
-fruitList.addEventListener("click", function (e) {
-    if (e.target.classList.contains("delete-btn")) {
-        const li = e.target.parentElement;
-        fruitList.removeChild(li);
+
+// delete functionality
+fruititems.addEventListener('click', function (event) {
+    if (event.target.classList.contains('delete-btn')) {
+        let buttontodelete = event.target.parentElement;
+        fruititems.removeChild(buttontodelete);
     }
 });
+
+
+const filter = document.getElementById('filter');
+
+filter.addEventListener('keyup', function (event) {
+    const text = event.target.value.toLowerCase();
+    const fruits = document.querySelectorAll('.fruit');
+    fruits.forEach(function (fruit) {
+        const fruitName = fruit.childNodes[0].textContent.toLowerCase();
+
+        const description = fruit.querySelector('p') ?
+            fruit.querySelector('p').textContent.toLowerCase() : '';
+
+        if (fruitName.includes(text) || description.includes(text)) {
+            fruit.style.display = 'flex';
+        } else {
+            fruit.style.display = 'none';
+            }
+    })
+});
+
+
 
